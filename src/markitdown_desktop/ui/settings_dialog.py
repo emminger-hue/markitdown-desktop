@@ -21,6 +21,7 @@ from PySide6.QtWidgets import (
 )
 
 from markitdown_desktop.core.converter import ConflictPolicy
+from markitdown_desktop.core.i18n import SYSTEM
 from markitdown_desktop.core.ocr import DEFAULT_LLM_MODEL, OcrConfig, OcrMode
 from markitdown_desktop.core.ocr.factory import check_azure_connection, check_llm_connection
 from markitdown_desktop.core.secrets import AZURE_KEY, LLM_API_KEY, SecretStore, SecretStoreError
@@ -144,6 +145,12 @@ class SettingsDialog(QDialog):
         self.conflict_combo.addItem(self.tr("Keep both (add a number)"), str(ConflictPolicy.RENAME))
         self.conflict_combo.addItem(self.tr("Skip"), str(ConflictPolicy.SKIP))
         output_form.addRow(self.tr("If the Markdown file exists"), self.conflict_combo)
+        self.language_combo = QComboBox()
+        self.language_combo.addItem(self.tr("System language"), SYSTEM)
+        self.language_combo.addItem("Deutsch", "de")
+        self.language_combo.addItem("English", "en")
+        self.language_combo.setToolTip(self.tr("Takes effect after restarting the app."))
+        output_form.addRow(self.tr("Language"), self.language_combo)
         root.addWidget(output_group)
 
         self.buttons = QDialogButtonBox(
@@ -184,6 +191,9 @@ class SettingsDialog(QDialog):
         policy = self._settings.conflict_policy
         self.conflict_combo.setCurrentIndex(
             self.conflict_combo.findData("ask" if policy is None else str(policy))
+        )
+        self.language_combo.setCurrentIndex(
+            max(0, self.language_combo.findData(self._settings.language))
         )
         self._update_enabled()
 
@@ -244,6 +254,7 @@ class SettingsDialog(QDialog):
         self._settings.llm_model = config.llm_model
         data = self.conflict_combo.currentData()
         self._settings.conflict_policy = None if data == "ask" else ConflictPolicy(data)
+        self._settings.language = str(self.language_combo.currentData())
         self._settings.sync()
         super().accept()
 

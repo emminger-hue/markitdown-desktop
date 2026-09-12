@@ -88,6 +88,15 @@ class AppSettings:
         self._s.setValue("ocr/llm_model", model.strip())
 
     @property
+    def language(self) -> str:
+        """ "system", "de" or "en"."""
+        return str(self._s.value("app/language", "system"))
+
+    @language.setter
+    def language(self, language: str) -> None:
+        self._s.setValue("app/language", language)
+
+    @property
     def first_run_done(self) -> bool:
         return bool(self._s.value("app/first_run_done", False, type=bool))
 

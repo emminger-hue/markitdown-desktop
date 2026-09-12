@@ -72,7 +72,7 @@ class MainWindow(QMainWindow):
     # ------------------------------------------------------------------ UI
     def _build_ui(self) -> None:
         self.setWindowTitle(APP_NAME)
-        self.resize(600, 500)
+        self.resize(680, 520)
         self.setAcceptDrops(True)
 
         central = QWidget()

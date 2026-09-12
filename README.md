@@ -49,6 +49,16 @@ ruff check . && ruff format .       # lint / format
 mypy src                            # type check
 ```
 
+Translations live in `src/markitdown_desktop/i18n/` (English is the source language). After
+changing UI strings:
+
+```bash
+pyside6-lupdate -no-obsolete -source-language en -target-language de $(find src -name "*.py") \
+    -ts src/markitdown_desktop/i18n/markitdown_desktop_de.ts   # then translate in Qt Linguist
+pyside6-lrelease src/markitdown_desktop/i18n/markitdown_desktop_de.ts \
+    -qm src/markitdown_desktop/i18n/markitdown_desktop_de.qm    # commit both .ts and .qm
+```
+
 Installers are built with [Briefcase](https://briefcase.beeware.org):
 
 ```bash

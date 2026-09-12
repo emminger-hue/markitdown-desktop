@@ -24,7 +24,11 @@ def get_engine() -> Any:
     global _engine
     with _engine_lock:
         if _engine is None:
-            logging.getLogger("RapidOCR").setLevel(logging.WARNING)
+            # rapidocr attaches a coloured stderr handler (and resets the level to INFO)
+            # in every module that imports its logger, unless a handler is already present.
+            logger = logging.getLogger("RapidOCR")
+            logger.addHandler(logging.NullHandler())
+            logger.setLevel(logging.WARNING)
             from rapidocr import RapidOCR
 
             _engine = RapidOCR()
