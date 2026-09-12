@@ -42,6 +42,20 @@ ist für spätere Signierung vorbereitet.
 Reverse-Domain-Konvention für GitHub-gehostete Projekte. Muss vor dem ersten signierten
 Release feststehen, da sie Teil der App-Identität ist; Änderung danach erzeugt eine „neue“ App.
 
+## D9 – 2026-09-12 – Laufzeit nutzt `PySide6-Essentials`, nicht das volle `PySide6`
+
+Die App braucht nur QtCore/QtGui/QtWidgets. Das volle Paket zieht `PySide6-Addons`
+(WebEngine, Charts, 3D, …) mit und würde die Installer um weit über 100 MB vergrößern. Die
+Qt-Linguist-Werkzeuge (`pyside6-lupdate`/`-lrelease`) funktionieren nur mit dem vollen Paket,
+daher liegt es in den Dev-Extras; die kompilierten `.qm`-Dateien sind eingecheckt.
+
+## D10 – 2026-09-12 – Release-Workflow testet die gebündelte App und baut auch ohne Zertifikat
+
+Jeder Build führt `--self-test tests/fixtures/scan.pdf` mit dem gebündelten Binary aus; damit
+ist belegt, dass Python, MarkItDown, ONNX Runtime und die OCR-Modelle im Paket funktionieren,
+bevor ein Installer entsteht. Ohne macOS-Secrets entsteht ein ad-hoc-signiertes DMG, damit
+der Workflow vor dem Hinterlegen der Zertifikate erprobt werden kann.
+
 ## D8 – 2026-09-12 – Lokaler OCR-Converter wird direkt registriert, nicht als Entry-Point-Plugin
 
 Die App kontrolliert die `MarkItDown`-Instanz und ruft `register_converter()` selbst auf.

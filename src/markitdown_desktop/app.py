@@ -16,7 +16,20 @@ def create_app(argv: list[str] | None = None) -> QApplication:
     return app
 
 
+def self_test(path: str) -> int:
+    """Convert one file with the offline engine and report; used to verify packaged builds."""
+    from markitdown_desktop.core.ocr import OcrConfig
+    from markitdown_desktop.core.ocr.factory import build_markitdown
+
+    markdown = build_markitdown(OcrConfig()).convert(path).markdown
+    print(f"self-test: {path} -> {len(markdown)} characters")
+    print(markdown[:400])
+    return 0 if markdown.strip() else 1
+
+
 def main() -> None:
+    if len(sys.argv) == 3 and sys.argv[1] == "--self-test":
+        sys.exit(self_test(sys.argv[2]))
     app = create_app()
     from markitdown_desktop.core.i18n import install_translators, resolve_language
     from markitdown_desktop.core.secrets import KeyringSecretStore

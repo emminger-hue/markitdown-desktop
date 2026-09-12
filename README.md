@@ -65,8 +65,45 @@ Installers are built with [Briefcase](https://briefcase.beeware.org):
 briefcase create && briefcase build && briefcase package   # on the target OS
 ```
 
-The release workflow (`.github/workflows/release.yml`) does this on macOS and Windows runners
-for every `v*` tag. See `docs/PLAN.md` for the required signing secrets.
+## Releasing
+
+`.github/workflows/release.yml` builds both installers on GitHub-hosted macOS (Apple Silicon)
+and Windows runners, runs the bundled app once in `--self-test` mode (converts a scanned PDF
+with the offline OCR engine) and, for `v*` tags, attaches the installers to a GitHub release.
+It can also be started manually from the *Actions* tab to test-build without a release.
+
+1. Bump `version` in `pyproject.toml` (both `[project]` and `[tool.briefcase]`) and
+   `src/markitdown_desktop/__init__.py`.
+2. `git tag v0.1.0 && git push origin v0.1.0`.
+
+### macOS signing secrets
+
+Without these the workflow still succeeds but produces an ad-hoc signed, unnotarized DMG that
+Gatekeeper blocks on other Macs. Add them under *Settings → Secrets and variables → Actions*:
+
+| Secret | Value |
+|---|---|
+| `MACOS_CERTIFICATE_P12` | Base64 of the *Developer ID Application* certificate exported as `.p12`: `base64 -i cert.p12 \| pbcopy` |
+| `MACOS_CERTIFICATE_PASSWORD` | Password chosen when exporting the `.p12` |
+| `MACOS_SIGNING_IDENTITY` | Certificate name, e.g. `Developer ID Application: Jane Doe (ABCDE12345)` |
+| `APPLE_ID` | Apple ID e-mail of the developer account |
+| `APPLE_TEAM_ID` | 10-character team ID |
+| `APPLE_APP_SPECIFIC_PASSWORD` | App-specific password created at appleid.apple.com (for `notarytool`) |
+
+Windows builds are unsigned until a code-signing certificate is available; Briefcase supports
+`briefcase package windows --identity <thumbprint>` once one is installed on the runner.
+
+### Manual test checklist (per installer)
+
+- Install from the DMG / MSI on a clean machine; the app starts without any additional setup.
+- First launch shows the OCR-mode dialog with *Local OCR* preselected; *Continue* opens the main window.
+- Drop `tests/fixtures/scan.pdf` – result is *Done* and `scan.md` contains "Rechnung Nr. 4711".
+- Drop `sample.docx`, `sample.xlsx`, `sample.png` and a folder – all convert next to the source.
+- Switch to *Save to folder*, pick a folder, convert again – output lands there.
+- Drop a file whose `.md` exists – the overwrite / keep both / skip dialog appears; *Remember* sticks.
+- *Settings…* → change language to the other one → restart → UI language changed.
+- Settings → Azure / LLM mode with real credentials → *Test connection* succeeds → a scan converts.
+- macOS only: the app opens without a Gatekeeper warning (signed + notarized build).
 
 ## Third-party licenses
 
