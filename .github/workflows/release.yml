@@ -57,10 +57,12 @@ jobs:
           xcrun notarytool store-credentials "briefcase-macOS-$APPLE_TEAM_ID" \
             --apple-id "$APPLE_ID" --team-id "$APPLE_TEAM_ID" --password "$APPLE_APP_SPECIFIC_PASSWORD"
 
+      - name: Build wheels for sdist-only dependencies
+        run: python -m pip wheel --no-deps --wheel-dir wheels antlr4-python3-runtime==4.9.3
+      - name: Create app bundle
+        run: briefcase create macOS --no-input
       - name: Build app bundle
-        run: |
-          briefcase create macOS --no-input
-          briefcase build macOS --no-input
+        run: briefcase build macOS --no-input
 
       - name: Self-test the bundled app
         env:
@@ -100,22 +102,29 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Install Briefcase
         run: python -m pip install --upgrade pip briefcase
+      - name: Build wheels for sdist-only dependencies
+        run: python -m pip wheel --no-deps --wheel-dir wheels antlr4-python3-runtime==4.9.3
+      - name: Create app
+        run: briefcase create windows --no-input
       - name: Build app
-        run: |
-          briefcase create windows --no-input
-          briefcase build windows --no-input
+        run: briefcase build windows --no-input
       - name: Self-test the bundled app
         shell: pwsh
         env:
           QT_QPA_PLATFORM: offscreen
         run: |
-          $exe = Get-ChildItem -Path build/markitdown_desktop/windows/app -Filter "*.exe" -Recurse | Where-Object { $_.Name -notlike "*python*" } | Select-Object -First 1
-          & $exe.FullName --self-test tests/fixtures/sample.png
-          $png = $LASTEXITCODE
-          & $exe.FullName --self-test tests/fixtures/scan.pdf
-          $pdf = $LASTEXITCODE
-          Write-Host "png=$png pdf=$pdf"
-          if ($png -ne 0 -or $pdf -ne 0) { exit 1 }
+          # GUI-subsystem exe: `&` returns immediately, so wait explicitly and capture output.
+          $exe = Get-ChildItem -Path build/markitdown_desktop/windows/app -Filter "MarkItDown Desktop.exe" -Recurse | Select-Object -First 1
+          $failed = $false
+          foreach ($fixture in @("tests/fixtures/sample.png", "tests/fixtures/scan.pdf")) {
+            $log = "selftest-" + [IO.Path]::GetFileName($fixture) + ".log"
+            $p = Start-Process -FilePath $exe.FullName -ArgumentList @("--self-test", $fixture) `
+                 -Wait -PassThru -NoNewWindow -RedirectStandardOutput $log -RedirectStandardError "$log.err"
+            Get-Content $log, "$log.err" -ErrorAction SilentlyContinue
+            Write-Host "$fixture -> exit $($p.ExitCode)"
+            if ($p.ExitCode -ne 0) { $failed = $true }
+          }
+          if ($failed) { exit 1 }
       - name: Package MSI (unsigned)
         run: briefcase package windows --no-input
       - uses: actions/upload-artifact@v4
