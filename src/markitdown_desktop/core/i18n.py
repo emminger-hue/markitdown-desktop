@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import re
+import subprocess
+import sys
 from pathlib import Path
 
 from PySide6.QtCore import QCoreApplication, QLibraryInfo, QLocale, QTranslator
@@ -13,11 +16,43 @@ TRANSLATIONS_DIR = Path(__file__).resolve().parent.parent / "i18n"
 def resolve_language(setting: str) -> str:
     if setting in SUPPORTED_LANGUAGES:
         return setting
-    for ui_language in QLocale.system().uiLanguages():
+    for ui_language in system_ui_languages():
         code = ui_language.replace("_", "-").split("-")[0].lower()
         if code in SUPPORTED_LANGUAGES:
             return code
     return SOURCE_LANGUAGE
+
+
+def system_ui_languages() -> list[str]:
+    """The user's preferred UI languages, most preferred first.
+
+    Inside a macOS app bundle that declares no localizations, Qt only ever reports
+    English, so the user's preference list is read from the system defaults there.
+    """
+    languages: list[str] = []
+    if sys.platform == "darwin":
+        languages.extend(macos_apple_languages())
+    languages.extend(QLocale.system().uiLanguages())
+    return languages
+
+
+def macos_apple_languages(read_defaults=None) -> list[str]:
+    """Parse `defaults read -g AppleLanguages`, e.g. '(\\n "de-DE",\\n "en-DE"\\n)'."""
+    try:
+        output = (
+            read_defaults()
+            if read_defaults is not None
+            else subprocess.run(
+                ["defaults", "read", "-g", "AppleLanguages"],
+                capture_output=True,
+                text=True,
+                timeout=5,
+                check=True,
+            ).stdout
+        )
+    except Exception:
+        return []
+    return re.findall(r'"([A-Za-z0-9-]+)"', output)
 
 
 def install_translators(app: QCoreApplication, language: str) -> list[QTranslator]:

@@ -321,47 +321,57 @@
         <translation>Systemsprache</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="152" />
+        <location filename="../ui/settings_dialog.py" line="153" />
         <source>Takes effect after restarting the app.</source>
         <translation>Wird nach einem Neustart der App wirksam.</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="153" />
+        <location filename="../ui/settings_dialog.py" line="266" />
+        <source>Restart required</source>
+        <translation>Neustart erforderlich</translation>
+    </message>
+    <message>
+        <location filename="../ui/settings_dialog.py" line="267" />
+        <source>The new language will be used the next time you start the app.</source>
+        <translation>Die neue Sprache wird beim nächsten Start der App verwendet.</translation>
+    </message>
+    <message>
+        <location filename="../ui/settings_dialog.py" line="152" />
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="190" />
+        <location filename="../ui/settings_dialog.py" line="192" />
         <source>Stored keys could not be read</source>
         <translation>Gespeicherte Schlüssel konnten nicht gelesen werden</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="221" />
+        <location filename="../ui/settings_dialog.py" line="223" />
         <source>Connection failed</source>
         <translation>Verbindung fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="224" />
+        <location filename="../ui/settings_dialog.py" line="226" />
         <source>Connection OK</source>
         <translation>Verbindung OK</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="224" />
+        <location filename="../ui/settings_dialog.py" line="226" />
         <source>The service answered.</source>
         <translation>Der Dienst hat geantwortet.</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="241" />
+        <location filename="../ui/settings_dialog.py" line="243" />
         <source>Missing credentials</source>
         <translation>Zugangsdaten fehlen</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="242" />
+        <location filename="../ui/settings_dialog.py" line="244" />
         <source>Please enter the credentials for the selected OCR mode.</source>
         <translation>Bitte die Zugangsdaten für den gewählten OCR-Modus eingeben.</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="249" />
+        <location filename="../ui/settings_dialog.py" line="251" />
         <source>Keys could not be stored</source>
         <translation>Schlüssel konnten nicht gespeichert werden</translation>
     </message>

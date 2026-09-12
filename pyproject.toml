@@ -102,6 +102,10 @@ cleanup_paths = ["**/speech_recognition/flac-*"]
 universal_build = false
 min_os_version = "14.0"
 
+[tool.briefcase.app.markitdown_desktop.macOS.info]
+# Without this macOS hands a bundle with no .lproj folders the development region only.
+CFBundleAllowMixedLocalizations = true
+
 [tool.briefcase.app.markitdown_desktop.windows]
 
 # ---------------------------------------------------------------------------
