@@ -6,6 +6,7 @@ from markitdown_desktop.core.i18n import (
     SUPPORTED_LANGUAGES,
     TRANSLATIONS_DIR,
     install_translators,
+    macos_apple_languages,
     resolve_language,
 )
 
@@ -15,6 +16,26 @@ def test_resolve_language_prefers_explicit_setting() -> None:
     assert resolve_language("en") == "en"
     assert resolve_language("system") in SUPPORTED_LANGUAGES
     assert resolve_language("") in SUPPORTED_LANGUAGES
+
+
+def test_macos_apple_languages_parses_defaults_output() -> None:
+    output = '(\n    "de-DE",\n    "en-DE",\n    "fr-FR"\n)\n'
+    assert macos_apple_languages(lambda: output) == ["de-DE", "en-DE", "fr-FR"]
+    assert macos_apple_languages(lambda: "()\n") == []
+
+    def broken() -> str:
+        raise OSError("defaults not available")
+
+    assert macos_apple_languages(broken) == []
+
+
+def test_system_languages_prefer_macos_defaults(monkeypatch) -> None:
+    import markitdown_desktop.core.i18n as i18n
+
+    monkeypatch.setattr(i18n.sys, "platform", "darwin")
+    monkeypatch.setattr(i18n, "macos_apple_languages", lambda: ["de-DE", "en-DE"])
+    assert i18n.system_ui_languages()[:2] == ["de-DE", "en-DE"]
+    assert i18n.resolve_language("system") == "de"
 
 
 def _is_translated(message: ET.Element) -> bool:

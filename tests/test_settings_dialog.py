@@ -46,6 +46,27 @@ def test_dialog_loads_and_saves_llm_mode(qtbot, tmp_path: Path) -> None:
     assert again.llm_api_key.text() == "sk-abc"
 
 
+def test_language_change_announces_restart(qtbot, tmp_path: Path, monkeypatch) -> None:
+    from PySide6.QtWidgets import QMessageBox
+
+    settings = make_settings(tmp_path)
+    dialog = SettingsDialog(settings, MemorySecretStore())
+    qtbot.addWidget(dialog)
+    shown: list[str] = []
+    monkeypatch.setattr(
+        QMessageBox, "information", lambda _parent, title, _text: shown.append(title)
+    )
+    dialog.accept()  # language unchanged: no message
+    assert shown == []
+
+    again = SettingsDialog(settings, MemorySecretStore())
+    qtbot.addWidget(again)
+    again.language_combo.setCurrentIndex(again.language_combo.findData("de"))
+    again.accept()
+    assert shown == ["Restart required"]
+    assert settings.language == "de"
+
+
 def test_dialog_refuses_cloud_mode_without_credentials(qtbot, tmp_path: Path, monkeypatch) -> None:
     settings = make_settings(tmp_path)
     dialog = SettingsDialog(settings, MemorySecretStore())

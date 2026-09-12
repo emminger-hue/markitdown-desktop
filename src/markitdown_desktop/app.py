@@ -44,6 +44,9 @@ def _print_environment() -> None:
     import platform
 
     print(f"python {sys.version.split()[0]} on {platform.platform()} {platform.machine()}")
+    from markitdown_desktop.core.i18n import resolve_language, system_ui_languages
+
+    print("ui languages:", system_ui_languages()[:6], "->", resolve_language("system"))
     for name in ("onnxruntime", "rapidocr", "pypdfium2", "numpy", "cv2", "PIL", "markitdown"):
         try:
             module = importlib.import_module(name)

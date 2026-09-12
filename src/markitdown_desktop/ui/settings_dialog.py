@@ -149,8 +149,10 @@ class SettingsDialog(QDialog):
         self.language_combo.addItem(self.tr("System language"), SYSTEM)
         self.language_combo.addItem("Deutsch", "de")
         self.language_combo.addItem("English", "en")
-        self.language_combo.setToolTip(self.tr("Takes effect after restarting the app."))
         output_form.addRow(self.tr("Language"), self.language_combo)
+        restart_hint = QLabel(self.tr("Takes effect after restarting the app."))
+        restart_hint.setEnabled(False)
+        output_form.addRow("", restart_hint)
         root.addWidget(output_group)
 
         self.buttons = QDialogButtonBox(
@@ -254,8 +256,16 @@ class SettingsDialog(QDialog):
         self._settings.llm_model = config.llm_model
         data = self.conflict_combo.currentData()
         self._settings.conflict_policy = None if data == "ask" else ConflictPolicy(data)
-        self._settings.language = str(self.language_combo.currentData())
+        language = str(self.language_combo.currentData())
+        language_changed = language != self._settings.language
+        self._settings.language = language
         self._settings.sync()
+        if language_changed:
+            QMessageBox.information(
+                self,
+                self.tr("Restart required"),
+                self.tr("The new language will be used the next time you start the app."),
+            )
         super().accept()
 
     def _store_secret(self, name: str, value: str) -> None:
