@@ -71,10 +71,22 @@ def canonical(name: str) -> str:
     return re.sub(r"[-_.]+", "-", name).lower()
 
 
+# Requirements that only the Windows wheels of some packages declare (per-wheel metadata),
+# so a closure computed on Linux or macOS would not see them.
+PLATFORM_WHEEL_REQUIREMENTS = [
+    "coloredlogs",  # onnxruntime (Windows)
+    "humanfriendly",  # coloredlogs
+    "pyreadline3",  # humanfriendly (Windows)
+    "sympy",  # onnxruntime (Windows)
+    "mpmath",  # sympy
+]
+
+
 def runtime_closure(root: str) -> dict[str, Distribution]:
     """Every distribution reachable from the app's (non-dev) requirements."""
     seen: dict[str, Distribution] = {}
     pending = [Requirement(r) for r in distribution(root).requires or [] if _is_runtime(r)]
+    pending += [Requirement(r) for r in PLATFORM_WHEEL_REQUIREMENTS]
     while pending:
         requirement = pending.pop()
         name = canonical(requirement.name)
