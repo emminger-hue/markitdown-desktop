@@ -49,56 +49,56 @@
     </message>
     <message>
         <location filename="../ui/about_dialog.py" line="122" />
-        <source>for scanned PDFs and images: &lt;i&gt;Local&lt;/i&gt; (default) runs entirely on this computer without an internet connection – no file leaves the machine. &lt;i&gt;Azure Document Intelligence&lt;/i&gt; and &lt;i&gt;LLM Vision&lt;/i&gt; send the documents to the respective service; credentials are kept in the system keychain.</source>
-        <translation>für gescannte PDFs und Bilder: &lt;i&gt;Lokal&lt;/i&gt; (Standard) läuft vollständig auf diesem Computer ohne Internetverbindung – keine Datei verlässt den Rechner. &lt;i&gt;Azure Document Intelligence&lt;/i&gt; und &lt;i&gt;LLM Vision&lt;/i&gt; übertragen die Dokumente an den jeweiligen Dienst; Zugangsdaten liegen im Schlüsselbund des Systems.</translation>
+        <source>for scanned PDFs and images: &lt;i&gt;Local&lt;/i&gt; (default) runs entirely on this computer without an internet connection – no file leaves the machine. It reads Latin script (e.g. German, English, French), Greek and Chinese; not Cyrillic, Arabic or Hebrew. &lt;i&gt;Azure Document Intelligence&lt;/i&gt; and &lt;i&gt;LLM Vision&lt;/i&gt; send the documents to the respective service; credentials are kept in the system keychain.</source>
+        <translation>für gescannte PDFs und Bilder: &lt;i&gt;Lokal&lt;/i&gt; (Standard) läuft vollständig auf diesem Computer ohne Internetverbindung – keine Datei verlässt den Rechner. Gelesen wird lateinische Schrift (z. B. Deutsch, Englisch, Französisch), außerdem Griechisch und Chinesisch; kein Kyrillisch, Arabisch oder Hebräisch. &lt;i&gt;Azure Document Intelligence&lt;/i&gt; und &lt;i&gt;LLM Vision&lt;/i&gt; übertragen die Dokumente an den jeweiligen Dienst; Zugangsdaten liegen im Schlüsselbund des Systems.</translation>
     </message>
     <message>
-        <location filename="../ui/about_dialog.py" line="128" />
+        <location filename="../ui/about_dialog.py" line="130" />
         <source>Note:</source>
         <translation>Hinweis:</translation>
     </message>
     <message>
-        <location filename="../ui/about_dialog.py" line="130" />
+        <location filename="../ui/about_dialog.py" line="132" />
         <source>Check the result for complex layouts, scanned tables and handwriting.</source>
         <translation>Bei komplexen Layouts, gescannten Tabellen und Handschrift ist das Ergebnis zu prüfen.</translation>
     </message>
     <message>
-        <location filename="../ui/about_dialog.py" line="132" />
+        <location filename="../ui/about_dialog.py" line="134" />
         <source>Privacy:</source>
         <translation>Datenschutz:</translation>
     </message>
     <message>
-        <location filename="../ui/about_dialog.py" line="135" />
+        <location filename="../ui/about_dialog.py" line="137" />
         <source>The app collects no data and does not connect to the internet in local mode. In the cloud modes, document contents are transmitted to Microsoft Azure or the chosen LLM provider under their privacy terms. “Check for updates” only opens the releases page in your browser.</source>
         <translation>Die App erhebt keine Daten und stellt im lokalen Modus keine Internetverbindung her. In den Cloud-Modi werden Dokumentinhalte an Microsoft Azure bzw. den gewählten LLM-Anbieter übertragen; es gelten deren Datenschutzbestimmungen. „Auf Updates prüfen“ öffnet lediglich die Releases-Seite im Browser.</translation>
     </message>
     <message>
-        <location filename="../ui/about_dialog.py" line="141" />
+        <location filename="../ui/about_dialog.py" line="143" />
         <source>Built on:</source>
         <translation>Basiert auf:</translation>
     </message>
     <message>
-        <location filename="../ui/about_dialog.py" line="144" />
+        <location filename="../ui/about_dialog.py" line="146" />
         <source>MarkItDown (Microsoft, MIT), RapidOCR (Apache 2.0), ONNX Runtime (MIT), Qt / PySide6 (LGPL v3, dynamically linked), PDFium (Apache 2.0 / BSD), PyMuPDF (AGPL v3). This is an independent project and is not affiliated with or endorsed by Microsoft.</source>
         <translation>MarkItDown (Microsoft, MIT), RapidOCR (Apache 2.0), ONNX Runtime (MIT), Qt / PySide6 (LGPL v3, dynamisch gebunden), PDFium (Apache 2.0 / BSD), PyMuPDF (AGPL v3). Dieses Programm ist ein unabhängiges Projekt und steht in keiner Verbindung zu Microsoft.</translation>
     </message>
     <message>
-        <location filename="../ui/about_dialog.py" line="150" />
+        <location filename="../ui/about_dialog.py" line="152" />
         <source>Provided without warranty of any kind under the MIT license. Source code, new versions and bug reports: {link}</source>
         <translation>Bereitstellung ohne Gewähr unter der MIT-Lizenz. Quellcode, neue Versionen und Fehlermeldungen: {link}</translation>
     </message>
     <message>
-        <location filename="../ui/about_dialog.py" line="168" />
+        <location filename="../ui/about_dialog.py" line="170" />
         <source>Settings file: {path}</source>
         <translation>Einstellungsdatei: {path}</translation>
     </message>
     <message>
-        <location filename="../ui/about_dialog.py" line="169" />
+        <location filename="../ui/about_dialog.py" line="171" />
         <source>OCR mode: {mode}</source>
         <translation>OCR-Modus: {mode}</translation>
     </message>
     <message>
-        <location filename="../ui/about_dialog.py" line="170" />
+        <location filename="../ui/about_dialog.py" line="172" />
         <source>UI language: {language} (system: {system})</source>
         <translation>Sprache der Oberfläche: {language} (System: {system})</translation>
     </message>
@@ -137,12 +137,12 @@
 <context>
     <name>LicensesDialog</name>
     <message>
-        <location filename="../ui/about_dialog.py" line="194" />
+        <location filename="../ui/about_dialog.py" line="199" />
         <source>Third-party licenses</source>
         <translation>Lizenzen Dritter</translation>
     </message>
     <message>
-        <location filename="../ui/about_dialog.py" line="198" />
+        <location filename="../ui/about_dialog.py" line="203" />
         <source>Search (Enter for next match)</source>
         <translation>Suchen (Enter für nächsten Treffer)</translation>
     </message>
@@ -334,26 +334,26 @@
     </message>
     <message>
         <location filename="../ui/settings_dialog.py" line="45" />
-        <source>Runs on this computer, works offline, no account needed. Reads German and English scans and images.</source>
-        <translation>Läuft auf diesem Computer, funktioniert offline, kein Konto nötig. Liest deutsche und englische Scans und Bilder.</translation>
+        <source>Runs on this computer, works offline, no account needed. Reads Latin script (e.g. German, English, French), Greek and Chinese; no Cyrillic, Arabic or Hebrew.</source>
+        <translation>Läuft auf diesem Computer, funktioniert offline, kein Konto nötig. Liest lateinische Schrift (z. B. Deutsch, Englisch, Französisch), Griechisch und Chinesisch; kein Kyrillisch, Arabisch oder Hebräisch.</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="51" />
+        <location filename="../ui/settings_dialog.py" line="52" />
         <source>Azure Document Intelligence</source>
         <translation>Azure Document Intelligence</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="53" />
+        <location filename="../ui/settings_dialog.py" line="54" />
         <source>Microsoft's cloud OCR with the best layout recognition. Requires an Azure resource, its endpoint and key; files are uploaded.</source>
         <translation>Microsofts Cloud-OCR mit der besten Layout-Erkennung. Benötigt eine Azure-Ressource mit Endpoint und Schlüssel; Dateien werden hochgeladen.</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="59" />
+        <location filename="../ui/settings_dialog.py" line="60" />
         <source>LLM Vision (OpenAI-compatible)</source>
         <translation>LLM Vision (OpenAI-kompatibel)</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="61" />
+        <location filename="../ui/settings_dialog.py" line="62" />
         <source>Uses a vision model such as gpt-4o via the official markitdown-ocr plugin. Requires an API key; files are uploaded.</source>
         <translation>Nutzt ein Vision-Modell wie gpt-4o über das offizielle markitdown-ocr-Plugin. Benötigt einen API-Schlüssel; Dateien werden hochgeladen.</translation>
     </message>
@@ -361,148 +361,148 @@
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../ui/settings_dialog.py" line="99" />
+        <location filename="../ui/settings_dialog.py" line="100" />
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="107" />
+        <location filename="../ui/settings_dialog.py" line="108" />
         <source>Text recognition (OCR)</source>
         <translation>Texterkennung (OCR)</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="113" />
+        <location filename="../ui/settings_dialog.py" line="114" />
         <source>Azure Document Intelligence</source>
         <translation>Azure Document Intelligence</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="119" />
-        <location filename="../ui/settings_dialog.py" line="133" />
+        <location filename="../ui/settings_dialog.py" line="120" />
+        <location filename="../ui/settings_dialog.py" line="134" />
         <source>Test connection</source>
         <translation>Verbindung testen</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="120" />
+        <location filename="../ui/settings_dialog.py" line="121" />
         <source>Endpoint</source>
         <translation>Endpoint</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="121" />
+        <location filename="../ui/settings_dialog.py" line="122" />
         <source>Key</source>
         <translation>Schlüssel</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="125" />
+        <location filename="../ui/settings_dialog.py" line="126" />
         <source>LLM Vision</source>
         <translation>LLM Vision</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="132" />
+        <location filename="../ui/settings_dialog.py" line="133" />
         <source>https://api.openai.com/v1 (default)</source>
         <translation>https://api.openai.com/v1 (Standard)</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="134" />
+        <location filename="../ui/settings_dialog.py" line="135" />
         <source>API key</source>
         <translation>API-Schlüssel</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="135" />
+        <location filename="../ui/settings_dialog.py" line="136" />
         <source>Model</source>
         <translation>Modell</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="136" />
+        <location filename="../ui/settings_dialog.py" line="137" />
         <source>Base URL</source>
         <translation>Basis-URL</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="140" />
+        <location filename="../ui/settings_dialog.py" line="141" />
         <source>Output</source>
         <translation>Ausgabe</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="143" />
+        <location filename="../ui/settings_dialog.py" line="144" />
         <source>Ask every time</source>
         <translation>Jedes Mal fragen</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="144" />
+        <location filename="../ui/settings_dialog.py" line="145" />
         <source>Overwrite</source>
         <translation>Überschreiben</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="145" />
+        <location filename="../ui/settings_dialog.py" line="146" />
         <source>Keep both (add a number)</source>
         <translation>Beide behalten (Nummer anhängen)</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="146" />
+        <location filename="../ui/settings_dialog.py" line="147" />
         <source>Skip</source>
         <translation>Überspringen</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="147" />
+        <location filename="../ui/settings_dialog.py" line="148" />
         <source>If the Markdown file exists</source>
         <translation>Wenn die Markdown-Datei existiert</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="149" />
+        <location filename="../ui/settings_dialog.py" line="150" />
         <source>System language</source>
         <translation>Systemsprache</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="153" />
+        <location filename="../ui/settings_dialog.py" line="154" />
         <source>Takes effect after restarting the app.</source>
         <translation>Wird nach einem Neustart der App wirksam.</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="266" />
+        <location filename="../ui/settings_dialog.py" line="267" />
         <source>Restart required</source>
         <translation>Neustart erforderlich</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="267" />
+        <location filename="../ui/settings_dialog.py" line="268" />
         <source>The new language will be used the next time you start the app.</source>
         <translation>Die neue Sprache wird beim nächsten Start der App verwendet.</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="152" />
+        <location filename="../ui/settings_dialog.py" line="153" />
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="192" />
+        <location filename="../ui/settings_dialog.py" line="193" />
         <source>Stored keys could not be read</source>
         <translation>Gespeicherte Schlüssel konnten nicht gelesen werden</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="223" />
+        <location filename="../ui/settings_dialog.py" line="224" />
         <source>Connection failed</source>
         <translation>Verbindung fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="226" />
+        <location filename="../ui/settings_dialog.py" line="227" />
         <source>Connection OK</source>
         <translation>Verbindung OK</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="226" />
+        <location filename="../ui/settings_dialog.py" line="227" />
         <source>The service answered.</source>
         <translation>Der Dienst hat geantwortet.</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="243" />
+        <location filename="../ui/settings_dialog.py" line="244" />
         <source>Missing credentials</source>
         <translation>Zugangsdaten fehlen</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="244" />
+        <location filename="../ui/settings_dialog.py" line="245" />
         <source>Please enter the credentials for the selected OCR mode.</source>
         <translation>Bitte die Zugangsdaten für den gewählten OCR-Modus eingeben.</translation>
     </message>
     <message>
-        <location filename="../ui/settings_dialog.py" line="251" />
+        <location filename="../ui/settings_dialog.py" line="252" />
         <source>Keys could not be stored</source>
         <translation>Schlüssel konnten nicht gespeichert werden</translation>
     </message>

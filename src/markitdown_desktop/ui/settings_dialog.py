@@ -42,8 +42,9 @@ class OcrModeChooser(QWidget):
                 OcrMode.LOCAL,
                 self.tr("Local OCR (recommended)"),
                 self.tr(
-                    "Runs on this computer, works offline, no account needed. "
-                    "Reads German and English scans and images."
+                    "Runs on this computer, works offline, no account needed. Reads Latin "
+                    "script (e.g. German, English, French), Greek and Chinese; no Cyrillic, "
+                    "Arabic or Hebrew."
                 ),
             ),
             (

@@ -120,9 +120,11 @@ class AboutDialog(QDialog):
             + "</b> "
             + self.tr(
                 "for scanned PDFs and images: <i>Local</i> (default) runs entirely on this "
-                "computer without an internet connection – no file leaves the machine. "
-                "<i>Azure Document Intelligence</i> and <i>LLM Vision</i> send the documents "
-                "to the respective service; credentials are kept in the system keychain."
+                "computer without an internet connection – no file leaves the machine. It "
+                "reads Latin script (e.g. German, English, French), Greek and Chinese; not "
+                "Cyrillic, Arabic or Hebrew. <i>Azure Document Intelligence</i> and "
+                "<i>LLM Vision</i> send the documents to the respective service; credentials "
+                "are kept in the system keychain."
             ),
             "<b>"
             + self.tr("Note:")
