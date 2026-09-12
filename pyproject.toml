@@ -110,7 +110,7 @@ qt_api = "pyside6"
 filterwarnings = ["ignore::RuntimeWarning:pydub.utils"]
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.12"
 ignore_missing_imports = true
 warn_unused_ignores = true
 check_untyped_defs = true
