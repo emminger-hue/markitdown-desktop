@@ -11,7 +11,7 @@ license = { text = "MIT" }
 requires-python = ">=3.11,<3.14"
 authors = [{ name = "emminger-hue" }]
 dependencies = [
-    "PySide6>=6.8,<7",
+    "PySide6-Essentials>=6.8,<7",
     "markitdown[all]==0.1.7",
     "markitdown-ocr>=0.1.0",
     "openai>=1.0",
@@ -26,6 +26,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+    "PySide6>=6.8,<7",  # full package: provides pyside6-lupdate / pyside6-lrelease
     "pytest>=8",
     "pytest-qt>=4.4",
     "ruff>=0.6",
@@ -71,7 +72,7 @@ icon = "src/markitdown_desktop/resources/icon"
 sources = ["src/markitdown_desktop"]
 test_sources = ["tests"]
 requires = [
-    "PySide6>=6.8,<7",
+    "PySide6-Essentials>=6.8,<7",
     "markitdown[all]==0.1.7",
     "markitdown-ocr>=0.1.0",
     "openai>=1.0",

@@ -1,0 +1,135 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  macos:
+    name: macOS (Apple Silicon)
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Install Briefcase
+        run: python -m pip install --upgrade pip briefcase
+
+      - name: Import Developer ID certificate
+        id: cert
+        env:
+          MACOS_CERTIFICATE_P12: ${{ secrets.MACOS_CERTIFICATE_P12 }}
+          MACOS_CERTIFICATE_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
+        run: |
+          if [ -z "$MACOS_CERTIFICATE_P12" ]; then
+            echo "No certificate secret set – building an ad-hoc signed, unnotarized DMG."
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          KEYCHAIN="$RUNNER_TEMP/build.keychain-db"
+          KEYCHAIN_PASSWORD="$(openssl rand -hex 16)"
+          echo "$MACOS_CERTIFICATE_P12" | base64 --decode > "$RUNNER_TEMP/certificate.p12"
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security import "$RUNNER_TEMP/certificate.p12" -P "$MACOS_CERTIFICATE_PASSWORD" \
+            -A -t cert -f pkcs12 -k "$KEYCHAIN"
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security list-keychain -d user -s "$KEYCHAIN" login.keychain-db
+          rm "$RUNNER_TEMP/certificate.p12"
+          echo "signed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Store notarization credentials
+        if: steps.cert.outputs.signed == 'true'
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+        run: |
+          xcrun notarytool store-credentials "briefcase-macOS-$APPLE_TEAM_ID" \
+            --apple-id "$APPLE_ID" --team-id "$APPLE_TEAM_ID" --password "$APPLE_APP_SPECIFIC_PASSWORD"
+
+      - name: Build app bundle
+        run: |
+          briefcase create macOS --no-input
+          briefcase build macOS --no-input
+
+      - name: Self-test the bundled app
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          APP="$(find build/markitdown_desktop/macos/app -maxdepth 1 -name '*.app' | head -n 1)"
+          "$APP/Contents/MacOS/MarkItDown Desktop" --self-test tests/fixtures/scan.pdf
+
+      - name: Package signed and notarized DMG
+        if: steps.cert.outputs.signed == 'true'
+        env:
+          MACOS_SIGNING_IDENTITY: ${{ secrets.MACOS_SIGNING_IDENTITY }}
+        run: briefcase package macOS --no-input --identity "$MACOS_SIGNING_IDENTITY"
+
+      - name: Package ad-hoc signed DMG (no certificate configured)
+        if: steps.cert.outputs.signed != 'true'
+        run: briefcase package macOS --no-input --adhoc-sign --no-notarize
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-dmg
+          path: dist/*.dmg
+          if-no-files-found: error
+
+  windows:
+    name: Windows (x64)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Install Briefcase
+        run: python -m pip install --upgrade pip briefcase
+      - name: Build app
+        run: |
+          briefcase create windows --no-input
+          briefcase build windows --no-input
+      - name: Self-test the bundled app
+        shell: pwsh
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          $exe = Get-ChildItem -Path build/markitdown_desktop/windows/app -Filter "*.exe" -Recurse | Where-Object { $_.Name -notlike "*python*" } | Select-Object -First 1
+          & $exe.FullName --self-test tests/fixtures/scan.pdf
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Package MSI (unsigned)
+        run: briefcase package windows --no-input
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-msi
+          path: dist/*.msi
+          if-no-files-found: error
+
+  release:
+    name: GitHub release
+    needs: [macos, windows]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: List installers
+        run: ls -la dist
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.dmg
+            dist/*.msi
+          generate_release_notes: true

@@ -74,13 +74,16 @@ src/markitdown_desktop/
 
 ## Release-Pipeline und Secrets (Meilenstein 5)
 
-`release.yml` läuft bei Tag `v*` auf `macos-14` (arm64) und `windows-latest`, baut beide
-Installer und hängt sie an ein GitHub-Release. Für macOS werden folgende Repository-Secrets
-benötigt (Namen werden in Meilenstein 5 final dokumentiert):
+`release.yml` läuft bei Tag `v*` (oder manuell) auf `macos-14` (arm64) und `windows-latest`,
+baut beide Installer, startet die gebündelte App einmal im `--self-test`-Modus (konvertiert ein
+Scan-PDF mit der Offline-OCR) und hängt die Installer bei Tags an ein GitHub-Release. Für macOS
+werden folgende Repository-Secrets benötigt (Details in der README, Abschnitt „Releasing“):
 
 - `MACOS_CERTIFICATE_P12` (Base64 des „Developer ID Application“-Zertifikats),
-  `MACOS_CERTIFICATE_PASSWORD`
+  `MACOS_CERTIFICATE_PASSWORD`, `MACOS_SIGNING_IDENTITY`
 - `APPLE_ID`, `APPLE_TEAM_ID`, `APPLE_APP_SPECIFIC_PASSWORD` (für `notarytool`)
+
+Fehlen die Secrets, entsteht ein ad-hoc-signiertes, nicht notarisiertes DMG (nur zum Testen).
 
 Windows bleibt bis zum Vorliegen eines Code-Signing-Zertifikats unsigniert; der
 SmartScreen-Hinweis ist in der README dokumentiert.
