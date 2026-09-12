@@ -67,7 +67,12 @@ jobs:
           QT_QPA_PLATFORM: offscreen
         run: |
           APP="$(find build/markitdown_desktop/macos/app -maxdepth 1 -name '*.app' | head -n 1)"
-          "$APP/Contents/MacOS/MarkItDown Desktop" --self-test tests/fixtures/scan.pdf
+          BIN="$APP/Contents/MacOS/MarkItDown Desktop"
+          set +e
+          "$BIN" --self-test tests/fixtures/sample.png; png=$?
+          "$BIN" --self-test tests/fixtures/scan.pdf; pdf=$?
+          echo "png=$png pdf=$pdf"
+          exit $(( png || pdf ))
 
       - name: Package signed and notarized DMG
         if: steps.cert.outputs.signed == 'true'
@@ -105,8 +110,12 @@ jobs:
           QT_QPA_PLATFORM: offscreen
         run: |
           $exe = Get-ChildItem -Path build/markitdown_desktop/windows/app -Filter "*.exe" -Recurse | Where-Object { $_.Name -notlike "*python*" } | Select-Object -First 1
+          & $exe.FullName --self-test tests/fixtures/sample.png
+          $png = $LASTEXITCODE
           & $exe.FullName --self-test tests/fixtures/scan.pdf
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $pdf = $LASTEXITCODE
+          Write-Host "png=$png pdf=$pdf"
+          if ($png -ne 0 -or $pdf -ne 0) { exit 1 }
       - name: Package MSI (unsigned)
         run: briefcase package windows --no-input
       - uses: actions/upload-artifact@v4
