@@ -64,6 +64,13 @@ still auf `omegaconf 2.0.0` aus, das keine `Path`-Werte kennt, und RapidOCR star
 Workflow baut das reine Python-Wheel vor `briefcase create` nach `wheels/`, Briefcase findet es
 über `requirement_installer_args = ["--find-links", "wheels"]`; beide Pakete sind gepinnt.
 
+## D12 – 2026-09-12 – FLAC-Binaries von `SpeechRecognition` werden aus dem Bundle entfernt
+
+Apple lehnte die Notarisierung wegen `speech_recognition/flac-mac` ab (x86_64, SDK älter als
+10.9). Das Paket kommt über `markitdown[all]` (Audio-Transkription) mit; die Oberfläche bietet
+keine Audio-Transkription an. `cleanup_paths = ["**/speech_recognition/flac-*"]` löscht die
+Binaries auf allen Plattformen vor dem Signieren.
+
 ## D8 – 2026-09-12 – Lokaler OCR-Converter wird direkt registriert, nicht als Entry-Point-Plugin
 
 Die App kontrolliert die `MarkItDown`-Instanz und ruft `register_converter()` selbst auf.

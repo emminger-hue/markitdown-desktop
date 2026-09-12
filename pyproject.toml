@@ -94,6 +94,9 @@ test_requires = ["pytest>=8", "pytest-qt>=4.4"]
 # Briefcase only installs binary wheels; `wheels/` holds pure-Python wheels built in CI
 # for packages that PyPI ships as sdist only (antlr4-python3-runtime).
 requirement_installer_args = ["--find-links", "wheels"]
+# SpeechRecognition ships ancient FLAC binaries (pre-10.9 SDK, x86_64) that Apple's
+# notarization rejects; audio transcription is not offered in the UI anyway.
+cleanup_paths = ["**/speech_recognition/flac-*"]
 
 [tool.briefcase.app.markitdown_desktop.macOS]
 universal_build = false
