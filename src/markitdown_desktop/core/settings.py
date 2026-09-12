@@ -56,6 +56,38 @@ class AppSettings:
         self._s.setValue("output/conflict_policy", ASK if policy is None else str(policy))
 
     @property
+    def ocr_mode(self) -> str:
+        return str(self._s.value("ocr/mode", "local"))
+
+    @ocr_mode.setter
+    def ocr_mode(self, mode: str) -> None:
+        self._s.setValue("ocr/mode", str(mode))
+
+    @property
+    def azure_endpoint(self) -> str:
+        return str(self._s.value("ocr/azure_endpoint", ""))
+
+    @azure_endpoint.setter
+    def azure_endpoint(self, endpoint: str) -> None:
+        self._s.setValue("ocr/azure_endpoint", endpoint.strip())
+
+    @property
+    def llm_base_url(self) -> str:
+        return str(self._s.value("ocr/llm_base_url", ""))
+
+    @llm_base_url.setter
+    def llm_base_url(self, url: str) -> None:
+        self._s.setValue("ocr/llm_base_url", url.strip())
+
+    @property
+    def llm_model(self) -> str:
+        return str(self._s.value("ocr/llm_model", "gpt-4o"))
+
+    @llm_model.setter
+    def llm_model(self, model: str) -> None:
+        self._s.setValue("ocr/llm_model", model.strip())
+
+    @property
     def first_run_done(self) -> bool:
         return bool(self._s.value("app/first_run_done", False, type=bool))
 

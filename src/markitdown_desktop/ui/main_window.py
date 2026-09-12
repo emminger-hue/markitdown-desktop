@@ -7,6 +7,7 @@ from PySide6.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent
 from PySide6.QtWidgets import (
     QAbstractItemView,
     QCheckBox,
+    QDialog,
     QFileDialog,
     QHBoxLayout,
     QHeaderView,
@@ -34,9 +35,13 @@ from markitdown_desktop.core.converter import (
     is_supported,
     output_path_for,
 )
+from markitdown_desktop.core.ocr import OcrConfig
+from markitdown_desktop.core.ocr.factory import build_markitdown
+from markitdown_desktop.core.secrets import MemorySecretStore, SecretStore
 from markitdown_desktop.core.settings import AppSettings, TargetMode
 from markitdown_desktop.core.worker import ConversionWorker, Job
 from markitdown_desktop.ui.drop_zone import DropZone, local_paths
+from markitdown_desktop.ui.settings_dialog import SettingsDialog
 from markitdown_desktop.ui.system import open_path, reveal_in_file_manager
 
 COL_FILE, COL_STATUS, COL_RESULT = 0, 1, 2
@@ -48,11 +53,15 @@ class MainWindow(QMainWindow):
     def __init__(
         self,
         settings: AppSettings | None = None,
+        secrets: SecretStore | None = None,
         service: ConversionService | None = None,
     ) -> None:
         super().__init__()
         self._settings = settings if settings is not None else AppSettings()
-        self._service = service if service is not None else ConversionService()
+        self._secrets: SecretStore = secrets if secrets is not None else MemorySecretStore()
+        self._service = (
+            service if service is not None else ConversionService(factory=self._make_markitdown)
+        )
         self._worker: ConversionWorker | None = None
         self._queue: list[Job] = []
         self._sources: dict[int, Path] = {}
@@ -108,6 +117,9 @@ class MainWindow(QMainWindow):
         root.addWidget(self.table, 1)
 
         bottom = QHBoxLayout()
+        self.settings_button = QPushButton(self.tr("Settings…"))
+        self.settings_button.clicked.connect(self.open_settings)
+        bottom.addWidget(self.settings_button)
         self.progress = QProgressBar()
         self.progress.setRange(0, 1)
         self.progress.setValue(0)
@@ -121,6 +133,18 @@ class MainWindow(QMainWindow):
         bottom.addWidget(self.cancel_button)
         bottom.addWidget(self.clear_button)
         root.addLayout(bottom)
+
+    def _make_markitdown(self):
+        return build_markitdown(OcrConfig.from_settings(self._settings, self._secrets))
+
+    def open_settings(self) -> None:
+        dialog = SettingsDialog(self._settings, self._secrets, self)
+        if dialog.exec() == QDialog.DialogCode.Accepted:
+            self.apply_settings()
+
+    def apply_settings(self) -> None:
+        """Rebuild the MarkItDown instance lazily so the new OCR mode is used next time."""
+        self._service.reset()
 
     def _load_settings(self) -> None:
         fixed = self._settings.target_mode is TargetMode.FIXED_DIR

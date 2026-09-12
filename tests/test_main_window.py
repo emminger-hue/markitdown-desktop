@@ -2,7 +2,7 @@ import shutil
 from pathlib import Path
 
 import pytest
-from PySide6.QtCore import QMimeData, QPoint, QPointF, QSettings, Qt, QUrl
+from PySide6.QtCore import QMimeData, QPoint, QPointF, Qt, QUrl
 from PySide6.QtGui import QDragEnterEvent, QDropEvent
 
 from markitdown_desktop.core.converter import ConflictPolicy, ConversionService, Status
@@ -19,11 +19,6 @@ def copy_fixture(name: str, into: Path) -> Path:
     target = into / name
     shutil.copy(FIXTURES / name, target)
     return target
-
-
-@pytest.fixture
-def settings(tmp_path: Path) -> AppSettings:
-    return AppSettings(QSettings(str(tmp_path / "settings.ini"), QSettings.Format.IniFormat))
 
 
 @pytest.fixture
