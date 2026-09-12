@@ -27,8 +27,9 @@ def get_engine() -> Any:
             # rapidocr attaches a coloured stderr handler (and resets the level to INFO)
             # in every module that imports its logger, unless a handler is already present.
             logger = logging.getLogger("RapidOCR")
-            logger.addHandler(logging.NullHandler())
-            logger.setLevel(logging.WARNING)
+            if not logger.handlers:  # leave it alone when diagnostics configured it already
+                logger.addHandler(logging.NullHandler())
+                logger.setLevel(logging.WARNING)
             from rapidocr import RapidOCR
 
             _engine = RapidOCR()
@@ -37,7 +38,7 @@ def get_engine() -> Any:
 
 def ocr_image(image: Image.Image, engine: Any | None = None) -> str:
     engine = engine if engine is not None else get_engine()
-    bgr = np.asarray(image.convert("RGB"))[:, :, ::-1]
+    bgr = np.ascontiguousarray(np.asarray(image.convert("RGB"))[:, :, ::-1])
     output = engine(bgr)
     lines = output.txts if output is not None and output.txts else ()
     return "\n".join(line.strip() for line in lines if line.strip())
