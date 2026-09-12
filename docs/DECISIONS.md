@@ -56,6 +56,14 @@ ist belegt, dass Python, MarkItDown, ONNX Runtime und die OCR-Modelle im Paket f
 bevor ein Installer entsteht. Ohne macOS-Secrets entsteht ein ad-hoc-signiertes DMG, damit
 der Workflow vor dem Hinterlegen der Zertifikate erprobt werden kann.
 
+## D11 – 2026-09-12 – `antlr4-python3-runtime` wird im Release-Workflow als Wheel gebaut
+
+Briefcase installiert ausschließlich Binary-Wheels. `rapidocr` → `omegaconf 2.3.x` →
+`antlr4-python3-runtime 4.9.x` gibt es auf PyPI nur als Quellpaket; pip wich deshalb im Bundle
+still auf `omegaconf 2.0.0` aus, das keine `Path`-Werte kennt, und RapidOCR startete nicht. Der
+Workflow baut das reine Python-Wheel vor `briefcase create` nach `wheels/`, Briefcase findet es
+über `requirement_installer_args = ["--find-links", "wheels"]`; beide Pakete sind gepinnt.
+
 ## D8 – 2026-09-12 – Lokaler OCR-Converter wird direkt registriert, nicht als Entry-Point-Plugin
 
 Die App kontrolliert die `MarkItDown`-Instanz und ruft `register_converter()` selbst auf.
