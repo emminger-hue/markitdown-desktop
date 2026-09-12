@@ -1,6 +1,109 @@
 <?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="de" sourcelanguage="en">
 <context>
+    <name>AboutDialog</name>
+    <message>
+        <location filename="../ui/about_dialog.py" line="41" />
+        <source>About {app}</source>
+        <translation>Über {app}</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="57" />
+        <source>Version {version} · © {year} {author} · MIT license</source>
+        <translation>Version {version} · © {year} {author} · MIT-Lizenz</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="74" />
+        <source>Details</source>
+        <translation>Details</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="89" />
+        <source>Check for updates</source>
+        <translation>Auf Updates prüfen</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="90" />
+        <source>Third-party licenses</source>
+        <translation>Lizenzen Dritter</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="106" />
+        <source>Converts documents to Markdown: drop a file onto the window or choose it, and a Markdown file with the same name is written next to it. The target folder can be changed in Settings.</source>
+        <translation>Wandelt Dokumente in Markdown um: Datei auf das Fenster ziehen oder auswählen, und daneben entsteht eine gleichnamige Markdown-Datei. Der Zielordner lässt sich in den Einstellungen ändern.</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="111" />
+        <source>Supported formats:</source>
+        <translation>Unterstützte Formate:</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="114" />
+        <source>PDF, Word (DOCX), PowerPoint (PPTX), Excel (XLSX/XLS), images (PNG, JPG, TIFF, BMP, WebP, GIF), HTML, CSV, JSON, XML, EPUB, ZIP, Outlook messages (MSG), Jupyter notebooks.</source>
+        <translation>PDF, Word (DOCX), PowerPoint (PPTX), Excel (XLSX/XLS), Bilder (PNG, JPG, TIFF, BMP, WebP, GIF), HTML, CSV, JSON, XML, EPUB, ZIP, Outlook-Nachrichten (MSG), Jupyter-Notebooks.</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="119" />
+        <source>Text recognition (OCR)</source>
+        <translation>Texterkennung (OCR)</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="122" />
+        <source>for scanned PDFs and images: &lt;i&gt;Local&lt;/i&gt; (default) runs entirely on this computer without an internet connection – no file leaves the machine. &lt;i&gt;Azure Document Intelligence&lt;/i&gt; and &lt;i&gt;LLM Vision&lt;/i&gt; send the documents to the respective service; credentials are kept in the system keychain.</source>
+        <translation>für gescannte PDFs und Bilder: &lt;i&gt;Lokal&lt;/i&gt; (Standard) läuft vollständig auf diesem Computer ohne Internetverbindung – keine Datei verlässt den Rechner. &lt;i&gt;Azure Document Intelligence&lt;/i&gt; und &lt;i&gt;LLM Vision&lt;/i&gt; übertragen die Dokumente an den jeweiligen Dienst; Zugangsdaten liegen im Schlüsselbund des Systems.</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="128" />
+        <source>Note:</source>
+        <translation>Hinweis:</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="130" />
+        <source>Check the result for complex layouts, scanned tables and handwriting.</source>
+        <translation>Bei komplexen Layouts, gescannten Tabellen und Handschrift ist das Ergebnis zu prüfen.</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="132" />
+        <source>Privacy:</source>
+        <translation>Datenschutz:</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="135" />
+        <source>The app collects no data and does not connect to the internet in local mode. In the cloud modes, document contents are transmitted to Microsoft Azure or the chosen LLM provider under their privacy terms. “Check for updates” only opens the releases page in your browser.</source>
+        <translation>Die App erhebt keine Daten und stellt im lokalen Modus keine Internetverbindung her. In den Cloud-Modi werden Dokumentinhalte an Microsoft Azure bzw. den gewählten LLM-Anbieter übertragen; es gelten deren Datenschutzbestimmungen. „Auf Updates prüfen“ öffnet lediglich die Releases-Seite im Browser.</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="141" />
+        <source>Built on:</source>
+        <translation>Basiert auf:</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="144" />
+        <source>MarkItDown (Microsoft, MIT), RapidOCR (Apache 2.0), ONNX Runtime (MIT), Qt / PySide6 (LGPL v3, dynamically linked), PDFium (Apache 2.0 / BSD), PyMuPDF (AGPL v3). This is an independent project and is not affiliated with or endorsed by Microsoft.</source>
+        <translation>MarkItDown (Microsoft, MIT), RapidOCR (Apache 2.0), ONNX Runtime (MIT), Qt / PySide6 (LGPL v3, dynamisch gebunden), PDFium (Apache 2.0 / BSD), PyMuPDF (AGPL v3). Dieses Programm ist ein unabhängiges Projekt und steht in keiner Verbindung zu Microsoft.</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="150" />
+        <source>Provided without warranty of any kind under the MIT license. Source code, new versions and bug reports: {link}</source>
+        <translation>Bereitstellung ohne Gewähr unter der MIT-Lizenz. Quellcode, neue Versionen und Fehlermeldungen: {link}</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="168" />
+        <source>Settings file: {path}</source>
+        <translation>Einstellungsdatei: {path}</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="169" />
+        <source>OCR mode: {mode}</source>
+        <translation>OCR-Modus: {mode}</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="170" />
+        <source>UI language: {language} (system: {system})</source>
+        <translation>Sprache der Oberfläche: {language} (System: {system})</translation>
+    </message>
+</context>
+<context>
     <name>DropZone</name>
     <message>
         <location filename="../ui/drop_zone.py" line="36" />
@@ -32,164 +135,192 @@
     </message>
 </context>
 <context>
+    <name>LicensesDialog</name>
+    <message>
+        <location filename="../ui/about_dialog.py" line="194" />
+        <source>Third-party licenses</source>
+        <translation>Lizenzen Dritter</translation>
+    </message>
+    <message>
+        <location filename="../ui/about_dialog.py" line="198" />
+        <source>Search (Enter for next match)</source>
+        <translation>Suchen (Enter für nächsten Treffer)</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
-        <location filename="../ui/main_window.py" line="89" />
+        <location filename="../ui/main_window.py" line="91" />
         <source>Save next to the source file</source>
         <translation>Neben der Quelldatei speichern</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="90" />
+        <location filename="../ui/main_window.py" line="92" />
         <source>Save to folder:</source>
         <translation>In Ordner speichern:</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="93" />
+        <location filename="../ui/main_window.py" line="95" />
         <source>No folder chosen</source>
         <translation>Kein Ordner gewählt</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="94" />
+        <location filename="../ui/main_window.py" line="96" />
         <source>Choose…</source>
         <translation>Wählen…</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="105" />
+        <location filename="../ui/main_window.py" line="107" />
         <source>File</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="105" />
+        <location filename="../ui/main_window.py" line="107" />
         <source>Status</source>
         <translation>Status</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="105" />
+        <location filename="../ui/main_window.py" line="107" />
         <source>Result</source>
         <translation>Ergebnis</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="120" />
+        <location filename="../ui/main_window.py" line="122" />
+        <source>Info…</source>
+        <translation>Info…</translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window.py" line="125" />
         <source>Settings…</source>
         <translation>Einstellungen…</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="127" />
+        <location filename="../ui/main_window.py" line="130" />
+        <source>About {app}</source>
+        <translation>Über {app}</translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window.py" line="133" />
+        <source>Help</source>
+        <translation>Hilfe</translation>
+    </message>
+    <message>
+        <location filename="../ui/main_window.py" line="138" />
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="130" />
+        <location filename="../ui/main_window.py" line="141" />
         <source>Clear list</source>
         <translation>Liste leeren</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="168" />
+        <location filename="../ui/main_window.py" line="182" />
         <source>Choose target folder</source>
         <translation>Zielordner wählen</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="182" />
+        <location filename="../ui/main_window.py" line="196" />
         <source>Choose files to convert</source>
         <translation>Dateien zum Konvertieren wählen</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="184" />
+        <location filename="../ui/main_window.py" line="198" />
         <source>Supported files ({patterns});;All files (*)</source>
         <translation>Unterstützte Dateien ({patterns});;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="215" />
+        <location filename="../ui/main_window.py" line="229" />
         <source>Markdown file already exists</source>
         <translation>Markdown-Datei existiert bereits</translation>
     </message>
     <message numerus="yes">
-        <location filename="../ui/main_window.py" line="216" />
+        <location filename="../ui/main_window.py" line="230" />
         <source>%n Markdown file(s) already exist at the target location.</source>
         <translation><numerusform>%n Markdown-Datei existiert am Zielort bereits.</numerusform><numerusform>%n Markdown-Dateien existieren am Zielort bereits.</numerusform></translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="217" />
+        <location filename="../ui/main_window.py" line="231" />
         <source>What should happen to existing files?</source>
         <translation>Was soll mit vorhandenen Dateien geschehen?</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="218" />
+        <location filename="../ui/main_window.py" line="232" />
         <source>Overwrite</source>
         <translation>Überschreiben</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="219" />
+        <location filename="../ui/main_window.py" line="233" />
         <source>Keep both</source>
         <translation>Beide behalten</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="220" />
+        <location filename="../ui/main_window.py" line="234" />
         <source>Skip</source>
         <translation>Überspringen</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="222" />
+        <location filename="../ui/main_window.py" line="236" />
         <source>Remember my choice</source>
         <translation>Auswahl merken</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="279" />
+        <location filename="../ui/main_window.py" line="293" />
         <source>Converting…</source>
         <translation>Konvertiere…</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="329" />
+        <location filename="../ui/main_window.py" line="343" />
         <source>Pending</source>
         <translation>Wartet</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="337" />
+        <location filename="../ui/main_window.py" line="351" />
         <source>Cancelled</source>
         <translation>Abgebrochen</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="342" />
+        <location filename="../ui/main_window.py" line="356" />
         <source>Done</source>
         <translation>Fertig</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="343" />
+        <location filename="../ui/main_window.py" line="357" />
         <source>Done (no text found)</source>
         <translation>Fertig (kein Text gefunden)</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="344" />
+        <location filename="../ui/main_window.py" line="358" />
         <source>Skipped (file exists)</source>
         <translation>Übersprungen (Datei existiert)</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="345" />
+        <location filename="../ui/main_window.py" line="359" />
         <source>Unsupported</source>
         <translation>Nicht unterstützt</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="346" />
+        <location filename="../ui/main_window.py" line="360" />
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="367" />
+        <location filename="../ui/main_window.py" line="381" />
         <source>Open Markdown</source>
         <translation>Markdown öffnen</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="368" />
+        <location filename="../ui/main_window.py" line="382" />
         <source>Show Markdown in file manager</source>
         <translation>Markdown im Dateimanager zeigen</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="372" />
+        <location filename="../ui/main_window.py" line="386" />
         <source>Open source file</source>
         <translation>Quelldatei öffnen</translation>
     </message>
     <message>
-        <location filename="../ui/main_window.py" line="373" />
+        <location filename="../ui/main_window.py" line="387" />
         <source>Show source in file manager</source>
         <translation>Quelldatei im Dateimanager zeigen</translation>
     </message>
