@@ -19,7 +19,8 @@ self-contained installer — no Python, no packages, nothing else to install.
   EPUB, ZIP, Outlook `.msg`, audio.
 - Three OCR modes, chosen on first launch and changeable any time in *Settings*:
   - **A – Local (default):** [RapidOCR](https://github.com/RapidAI/RapidOCR) on ONNX Runtime,
-    fully offline, German + English. Used for image files and for PDF pages without a text
+    fully offline. Reads Latin script (e.g. German, English, French), Greek and Chinese —
+    not Cyrillic, Arabic or Hebrew. Used for image files and for PDF pages without a text
     layer.
   - **B – Azure Document Intelligence:** MarkItDown's built-in `docintel_endpoint` support.
     Needs an Azure resource, endpoint and key.

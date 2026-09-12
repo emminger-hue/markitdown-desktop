@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "markitdown-desktop"
-version = "0.1.0"
+version = "0.1.1"
 description = "Desktop GUI for Microsoft MarkItDown with bundled OCR – drop a file, get Markdown."
 readme = "README.md"
 license = "MIT"
@@ -59,7 +59,7 @@ markitdown_desktop = ["resources/**/*", "i18n/*.qm"]
 [tool.briefcase]
 project_name = "MarkItDown Desktop"
 bundle = "io.github.emminger-hue"
-version = "0.1.0"
+version = "0.1.1"
 url = "https://github.com/emminger-hue/markitdown-desktop"
 license = "MIT"
 license-files = ["LICENSE"]

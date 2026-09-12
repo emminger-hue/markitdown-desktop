@@ -1,5 +1,10 @@
 """MarkItDown Desktop – a small GUI around Microsoft MarkItDown with bundled OCR."""
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 APP_NAME = "MarkItDown Desktop"
 ORG_NAME = "emminger-hue"
+AUTHOR = "Marc Emminger"
+COPYRIGHT_YEAR = "2026"
+REPO_URL = "https://github.com/emminger-hue/markitdown-desktop"
+RELEASES_URL = f"{REPO_URL}/releases"
+ISSUES_URL = f"{REPO_URL}/issues"

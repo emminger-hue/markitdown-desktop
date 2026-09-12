@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 from PySide6.QtCore import QPoint, Qt, Signal
-from PySide6.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent
+from PySide6.QtGui import QAction, QCloseEvent, QDragEnterEvent, QDropEvent
 from PySide6.QtWidgets import (
     QAbstractItemView,
     QCheckBox,
@@ -40,6 +41,7 @@ from markitdown_desktop.core.ocr.factory import build_markitdown
 from markitdown_desktop.core.secrets import MemorySecretStore, SecretStore
 from markitdown_desktop.core.settings import AppSettings, TargetMode
 from markitdown_desktop.core.worker import ConversionWorker, Job
+from markitdown_desktop.ui.about_dialog import open_about
 from markitdown_desktop.ui.drop_zone import DropZone, local_paths
 from markitdown_desktop.ui.settings_dialog import SettingsDialog
 from markitdown_desktop.ui.system import open_path, reveal_in_file_manager
@@ -117,9 +119,18 @@ class MainWindow(QMainWindow):
         root.addWidget(self.table, 1)
 
         bottom = QHBoxLayout()
+        self.info_button = QPushButton(self.tr("Info…"))
+        self.info_button.clicked.connect(self.open_about)
+        bottom.addWidget(self.info_button)
         self.settings_button = QPushButton(self.tr("Settings…"))
         self.settings_button.clicked.connect(self.open_settings)
         bottom.addWidget(self.settings_button)
+        if sys.platform == "darwin":
+            # Qt moves an AboutRole action into the application menu on macOS.
+            about_action = QAction(self.tr("About {app}").format(app=APP_NAME), self)
+            about_action.setMenuRole(QAction.MenuRole.AboutRole)
+            about_action.triggered.connect(self.open_about)
+            self.menuBar().addMenu(self.tr("Help")).addAction(about_action)
         self.progress = QProgressBar()
         self.progress.setRange(0, 1)
         self.progress.setValue(0)
@@ -136,6 +147,9 @@ class MainWindow(QMainWindow):
 
     def _make_markitdown(self):
         return build_markitdown(OcrConfig.from_settings(self._settings, self._secrets))
+
+    def open_about(self) -> None:
+        open_about(self._settings, self)
 
     def open_settings(self) -> None:
         dialog = SettingsDialog(self._settings, self._secrets, self)
