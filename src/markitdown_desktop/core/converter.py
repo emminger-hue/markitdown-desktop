@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import time
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from enum import StrEnum
 from pathlib import Path
@@ -43,6 +43,22 @@ SUPPORTED_EXTENSIONS = BUILTIN_EXTENSIONS | OCR_IMAGE_EXTENSIONS
 
 def is_supported(path: Path) -> bool:
     return path.suffix.lower() in SUPPORTED_EXTENSIONS
+
+
+def expand_paths(paths: Iterable[Path]) -> list[Path]:
+    """Files as given; folders recursively, but only their supported, non-hidden files."""
+    files: list[Path] = []
+    for raw in paths:
+        path = Path(raw)
+        if path.is_dir():
+            files.extend(
+                child
+                for child in sorted(path.rglob("*"))
+                if child.is_file() and is_supported(child) and not child.name.startswith(".")
+            )
+        elif path.is_file():
+            files.append(path)
+    return list(dict.fromkeys(files))
 
 
 class ConflictPolicy(StrEnum):
