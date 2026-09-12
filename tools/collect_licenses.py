@@ -148,7 +148,9 @@ def render(dists: dict[str, Distribution]) -> str:
         "THIRD-PARTY LICENSES",
         "",
         "MarkItDown Desktop bundles the following components. Each entry lists the",
-        "component, its license and the license text or notice that applies.",
+        "component, its license and the license text or notice that applies. Version",
+        "numbers are those of the environment this file was generated in; the installer",
+        "may carry a newer patch release of a component under the same license.",
         "",
     ]
     for name, version, identifier, home, text in EXTRA_COMPONENTS:

@@ -57,10 +57,16 @@ def test_licenses_file_covers_every_runtime_dependency() -> None:
     )
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    text = LICENSES_FILE.read_text(encoding="utf-8")
+    # Versions differ between environments (pip resolves them at install time), so only
+    # the set of packages is checked: a new dependency must get its license entry.
+    listed = {
+        module.canonical(line.rsplit(" ", 1)[0])
+        for line in LICENSES_FILE.read_text(encoding="utf-8").splitlines()
+        if line and not line.startswith(("=", "-", "(", "License:", "Homepage:", "Author:"))
+    }
     missing = [
-        f"{dist.metadata['Name']} {dist.version}"
+        dist.metadata["Name"]
         for dist in module.runtime_closure(module.APP).values()
-        if f"{dist.metadata['Name']} {dist.version}" not in text
+        if module.canonical(dist.metadata["Name"]) not in listed
     ]
     assert missing == [], f"re-run tools/collect_licenses.py; missing: {missing}"
