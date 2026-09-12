@@ -1,0 +1,21 @@
+import tomllib
+from pathlib import Path
+
+import markitdown_desktop
+from markitdown_desktop.ui.main_window import MainWindow
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_version_is_consistent_with_pyproject() -> None:
+    data = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+    assert data["project"]["version"] == markitdown_desktop.__version__
+    assert data["tool"]["briefcase"]["version"] == markitdown_desktop.__version__
+
+
+def test_main_window_shows(qtbot) -> None:
+    window = MainWindow()
+    qtbot.addWidget(window)
+    window.show()
+    assert window.isVisible()
+    assert window.windowTitle() == markitdown_desktop.APP_NAME

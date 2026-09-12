@@ -1,0 +1,116 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "markitdown-desktop"
+version = "0.1.0"
+description = "Desktop GUI for Microsoft MarkItDown with bundled OCR – drop a file, get Markdown."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11,<3.14"
+authors = [{ name = "emminger-hue" }]
+dependencies = [
+    "PySide6>=6.8,<7",
+    "markitdown[all]==0.1.7",
+    "markitdown-ocr>=0.1.0",
+    "openai>=1.0",
+    "rapidocr>=3.9",
+    "onnxruntime>=1.20",
+    "pypdfium2>=4.30",
+    "pillow>=10",
+    "numpy>=1.26",
+    "keyring>=25",
+    "platformdirs>=4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-qt>=4.4",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "briefcase>=0.4",
+    "python-docx",
+    "python-pptx",
+    "openpyxl",
+]
+
+[project.urls]
+Homepage = "https://github.com/emminger-hue/markitdown-desktop"
+Issues = "https://github.com/emminger-hue/markitdown-desktop/issues"
+
+[project.gui-scripts]
+markitdown-desktop = "markitdown_desktop.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+markitdown_desktop = ["resources/**/*", "i18n/*.qm"]
+
+# ---------------------------------------------------------------------------
+# Briefcase (installer packaging for macOS .dmg and Windows .msi)
+# ---------------------------------------------------------------------------
+[tool.briefcase]
+project_name = "MarkItDown Desktop"
+bundle = "io.github.emminger-hue"
+version = "0.1.0"
+url = "https://github.com/emminger-hue/markitdown-desktop"
+license.file = "LICENSE"
+author = "emminger-hue"
+
+[tool.briefcase.app.markitdown_desktop]
+formal_name = "MarkItDown Desktop"
+description = "Convert documents to Markdown with MarkItDown – drag & drop, with built-in OCR."
+long_description = """Drop PDF, Office, image and other files onto the window and get a Markdown
+file next to the source. Bundles Microsoft MarkItDown, an offline OCR engine and
+optional cloud OCR (Azure Document Intelligence, LLM Vision).
+"""
+icon = "src/markitdown_desktop/resources/icon"
+sources = ["src/markitdown_desktop"]
+test_sources = ["tests"]
+requires = [
+    "PySide6>=6.8,<7",
+    "markitdown[all]==0.1.7",
+    "markitdown-ocr>=0.1.0",
+    "openai>=1.0",
+    "rapidocr>=3.9",
+    "onnxruntime>=1.20",
+    "pypdfium2>=4.30",
+    "pillow>=10",
+    "numpy>=1.26",
+    "keyring>=25",
+    "platformdirs>=4",
+]
+test_requires = ["pytest>=8", "pytest-qt>=4.4"]
+
+[tool.briefcase.app.markitdown_desktop.macOS]
+universal_build = false
+min_os_version = "14.0"
+
+[tool.briefcase.app.markitdown_desktop.windows]
+min_os_version = "10.0.19041"
+
+# ---------------------------------------------------------------------------
+# Tooling
+# ---------------------------------------------------------------------------
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+qt_api = "pyside6"
+filterwarnings = ["ignore::RuntimeWarning:pydub.utils"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+warn_unused_ignores = true
+check_untyped_defs = true
