@@ -18,6 +18,7 @@ def create_app(argv: list[str] | None = None) -> QApplication:
 
 def main() -> None:
     app = create_app()
+    from markitdown_desktop.core.i18n import install_translators, resolve_language
     from markitdown_desktop.core.secrets import KeyringSecretStore
     from markitdown_desktop.core.settings import AppSettings
     from markitdown_desktop.ui.first_run_dialog import run_first_run
@@ -25,6 +26,7 @@ def main() -> None:
 
     settings = AppSettings()
     secrets = KeyringSecretStore()
+    install_translators(app, resolve_language(settings.language))
     window = MainWindow(settings=settings, secrets=secrets)
     window.show()
     run_first_run(settings, secrets, window)
