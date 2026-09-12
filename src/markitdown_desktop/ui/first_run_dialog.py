@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from PySide6.QtGui import QShowEvent
 from PySide6.QtWidgets import QDialog, QDialogButtonBox, QLabel, QVBoxLayout, QWidget
 
 from markitdown_desktop import APP_NAME
@@ -7,6 +8,7 @@ from markitdown_desktop.core.ocr import OcrMode
 from markitdown_desktop.core.secrets import SecretStore
 from markitdown_desktop.core.settings import AppSettings
 from markitdown_desktop.ui.settings_dialog import OcrModeChooser, SettingsDialog
+from markitdown_desktop.ui.system import fit_height_to_wrapped_text
 
 
 class FirstRunDialog(QDialog):
@@ -33,6 +35,10 @@ class FirstRunDialog(QDialog):
         buttons.button(QDialogButtonBox.StandardButton.Ok).setText(self.tr("Continue"))
         buttons.accepted.connect(self.accept)
         layout.addWidget(buttons)
+
+    def showEvent(self, event: QShowEvent) -> None:
+        super().showEvent(event)
+        fit_height_to_wrapped_text(self)
 
     def accept(self) -> None:
         self._settings.ocr_mode = str(self.mode_chooser.mode)

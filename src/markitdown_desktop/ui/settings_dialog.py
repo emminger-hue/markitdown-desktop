@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Callable
 
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QGuiApplication
+from PySide6.QtGui import QGuiApplication, QShowEvent
 from PySide6.QtWidgets import (
     QComboBox,
     QDialog,
@@ -25,6 +25,7 @@ from markitdown_desktop.core.ocr import DEFAULT_LLM_MODEL, OcrConfig, OcrMode
 from markitdown_desktop.core.ocr.factory import check_azure_connection, check_llm_connection
 from markitdown_desktop.core.secrets import AZURE_KEY, LLM_API_KEY, SecretStore, SecretStoreError
 from markitdown_desktop.core.settings import AppSettings
+from markitdown_desktop.ui.system import fit_height_to_wrapped_text
 
 
 class OcrModeChooser(QWidget):
@@ -156,6 +157,10 @@ class SettingsDialog(QDialog):
             self.mode_chooser.button(mode).toggled.connect(self._update_enabled)
         self.azure_test.clicked.connect(self._test_azure)
         self.llm_test.clicked.connect(self._test_llm)
+
+    def showEvent(self, event: QShowEvent) -> None:
+        super().showEvent(event)
+        fit_height_to_wrapped_text(self)
 
     @staticmethod
     def _right(widget: QWidget) -> QWidget:
