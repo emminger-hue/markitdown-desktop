@@ -13,12 +13,16 @@ def test_version_is_consistent_with_pyproject() -> None:
     assert data["tool"]["briefcase"]["version"] == markitdown_desktop.__version__
 
 
-def test_self_test_converts_a_scan(capsys) -> None:
+def test_self_test_converts_a_scan(capsys, tmp_path: Path) -> None:
+    from PIL import Image
+
     from markitdown_desktop.app import self_test
 
     assert self_test(str(ROOT / "tests" / "fixtures" / "scan.pdf")) == 0
     assert "4711" in capsys.readouterr().out
-    assert self_test(str(ROOT / "tests" / "fixtures" / "unsupported.xyz")) == 1
+    blank = tmp_path / "blank.png"
+    Image.new("RGB", (200, 100), "white").save(blank)
+    assert self_test(str(blank)) == 1
 
 
 def test_main_window_shows(qtbot) -> None:
